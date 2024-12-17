@@ -1,6 +1,7 @@
 name: Create OCI With Terraform
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [custom-event-name]
 
 jobs: 
   OCI-IaC-Deployment:
