@@ -5,12 +5,12 @@ variable region{
 }
 variable compartment_ocid{
     type = string
-    default = "ocid1.compartment.oc1..aaaaaaaapqrsts4pmvmisrzyprycvgl5jjapmaqsm2umcvuciaansete7s2q"
+    default = "ocid1.compartment.oc1..aaaaaaaa7nhpsworbxrgut7cwvsjzpp6cba33sq6jnxwkotzo4toc3juqwqa"
     description = "enter the compartment ocid"
 }
 variable tenancy_ocid{
     type = string
-    default = "ocid1.tenancy.oc1..aaaaaaaal52gmqdp5vwuz2r744jjicjqdbzc7dp6ipbvzhv4z7c4kekgftvq"
+    default = "ocid1.tenancy.oc1..aaaaaaaavc76ja77ynos2lfgdfwbbten7l25irg2wpm4asuyighwsbsdyj6a"
     description = "enter the tenancy ocid"
 
 }
@@ -31,7 +31,7 @@ variable bucket_name{
 
 variable bucket_namespace{
     type = string
-    default = "bmr5po5cv4zs"
+    default = "bmzqkkm7b0th"
     description = "enter the bucket namespace"
 }
 variable bucket_access_type{
