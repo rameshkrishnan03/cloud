@@ -15,14 +15,14 @@ jobs:
       
       - name: 'Write Config & Key Files'
         run: |
-          mkdir ~/.oci
-          echo "[DEFAULT]" >> ~/.oci/config
-          echo "user=${{secrets.OCI_USER_OCID}}" >> ~/.oci/config
-          echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
-          echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
-          echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> ~/.oci/config
-          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
-          echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
+          mkdir -p ~/.oci
+          echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
+          echo "${{ secrets.OCI_KEY_FILE }}" > ~/.oci/key.pem
+          
+      - name: 'Fix File Permissions'
+        run: |
+          chmod 600 ~/.oci/config
+          chmod 600 ~/.oci/key.pem
       
       - name: 'Install OCI CLI'
         run: |
@@ -32,11 +32,6 @@ jobs:
           echo "/home/runner/bin" >> $GITHUB_PATH
           exec -l $SHELL
       
-      - name: 'Fix OCI Config File Permissions'
-        run: |
-          oci setup repair-file-permissions --file /home/runner/.oci/config
-          oci setup repair-file-permissions --file /home/runner/.oci/key.pem
-
       - name: Terraform Init
         id: init
         run: terraform init
