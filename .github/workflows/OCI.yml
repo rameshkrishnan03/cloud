@@ -5,6 +5,9 @@ on:
   repository_dispatch:
     types: [hello_event] # Custom event type
 
+permissions:
+  contents: write
+
 jobs:
   say-hello:
     runs-on: ubuntu-latest
