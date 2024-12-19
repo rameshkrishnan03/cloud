@@ -13,3 +13,14 @@ jobs:
       - name: Respond to Repository Dispatch
         run: echo "Hello,${{ github.event.client_payload.name }}!"
 
+      - name: Create JSON file from payload
+        run: |
+          echo '${{ toJSON(github.event.client_payload) }}' > payload_data.json
+          
+      - name: Commit and push
+        run: |
+          git config --global user.name 'rameshkrishnan03'
+          git config --global user.email 'suriyaramesh486@gmail.com'
+          git add payload_data.json
+          git commit -m "Save client payload data"
+          git push
