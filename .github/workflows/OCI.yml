@@ -23,10 +23,6 @@ jobs:
           
       - name: Commit and push
         run: |
-          git config --global user.name 'rameshkrishnan03'
-          git config --global user.email 'suriyaramesh486@gmail.com'
           git add payload_data.json
           git commit -m "Save client payload data"
-          git push origin HEAD:${GITHUB_REF#refs/heads/}
-  permissions:
-  contents: write
+          git push origin main
