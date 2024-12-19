@@ -9,6 +9,9 @@ jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4    
+        
       - name: Respond to Repository Dispatch
         run: echo "Hello,${{ github.event.client_payload.name }}!"
 
