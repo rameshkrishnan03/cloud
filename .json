@@ -1,5 +1,3 @@
 {
-  "integration": true,
-  "name": "",
-  "unit": false
+  "message": "Hello, World! Triggered from Power Automate"
 }
