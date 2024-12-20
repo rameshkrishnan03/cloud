@@ -20,12 +20,13 @@ jobs:
 
       - name: Create JSON file from payload
         run: |
-          echo '${{ toJSON(github.event.client_payload) }}' > ${{ github.event.client_payload.name }}.json
+          sanitized_name=$(echo "${{ github.event.client_payload.name }}" | tr ' ' '_')
+          echo '${{ toJSON(github.event.client_payload) }}' > ${sanitized_name}.json
           
       - name: Commit and push
         run: |
           git config user.email "suriyaramesh486@gmail.com"
           git config user.name "rameshkrishnan03"
-          git add ${{ github.event.client_payload.name }}.json
+          git add ${sanitized_name}.json
           git commit -m "Save client payload data"
           git push origin main
