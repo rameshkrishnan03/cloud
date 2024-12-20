@@ -27,6 +27,6 @@ jobs:
         run: |
           git config user.email "suriyaramesh486@gmail.com"
           git config user.name "rameshkrishnan03"
-          git add *.json
+          git add ${{ github.event.client_payload.name }}.json
           git commit -m "Save client payload data"
           git push origin main
