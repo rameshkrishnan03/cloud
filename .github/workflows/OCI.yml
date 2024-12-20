@@ -20,8 +20,7 @@ jobs:
 
       - name: Create JSON file from payload
         run: |
-          filename="${{ github.event.client_payload.name }}.json"
-          echo '${{ toJSON(github.event.client_payload) }}' > "$filename"
+          echo '${{ toJSON(github.event.client_payload) }}' > ${{ github.event.client_payload.name }}.json
           
       - name: Commit and push
         run: |
