@@ -48,7 +48,11 @@ jobs:
       - name: Install OCI SDK
         run: pip install oci
 
+      - name: Decode and create OCI config file
+        run: |
+          mkdir -p ~/.oci
+          echo "${{ secrets.OCI_CONFIG_FILE }}" | base64 --decode > ~/.oci/config
+          chmod 600 ~/.oci/config
+
       - name: Run OCI SDK script
-        env: 
-          OCI_CONFIG_FILE: ${{ secrets.OCI_CONFIG_FILE }} # Encrypted secret for OCI config
         run: python create_vcn.py
