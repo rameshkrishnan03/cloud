@@ -1,8 +1,15 @@
 import oci
 import os
 
-oci_config_file = os.getenv('OCI_CONFIG_FILE')
-config = oci.config.from_file(oci_config_file, "DEFAULT")  
+# Set the config file location (defaults to ~/.oci/config)
+oci_config_file = os.getenv('OCI_CONFIG_FILE', '~/.oci/config')
+oci_config_file = os.path.expanduser(oci_config_file)
+
+try:
+    config = oci.config.from_file(oci_config_file, "DEFAULT")
+except Exception as e:
+    print(f"Error loading OCI config file: {e}")
+    exit(1)  
 
 virtual_network_client = oci.core.VirtualNetworkClient(config) 
 
@@ -15,6 +22,7 @@ vcn_details = oci.core.models.CreateVcnDetails(
 
 try:
     response = virtual_network_client.create_vcn(vcn_details)
-    print("VCN created successfully")
-except oci.exceptions.ServiceError as OC:
-    print(f"Error creating VCN: {OC}")
+    print("VCN created successfully!")
+except oci.exceptions.ServiceError as e:
+    print(f"Error creating VCN: {e}")
+    exit(1)
