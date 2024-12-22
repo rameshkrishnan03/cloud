@@ -51,8 +51,13 @@ jobs:
       - name: Decode and create OCI config file
         run: |
           mkdir -p ~/.oci
-          echo "${{ secrets.OCI_CONFIG_FILE }}" | base64 --decode > ~/.oci/config
+          echo "${{ secrets.OCI_CONFIG }}" | base64 --decode > ~/.oci/config
           chmod 600 ~/.oci/config
+
+      - name: Save OCI Private Key
+        run: |
+          echo "${{ secrets.OCI_KEY_FILE }}" > $HOME/.oci/oci_api_key.pem
+          chmod 600 $HOME/.oci/oci_api_key.pem
 
       - name: Run OCI SDK script
         run: python create_vcn.py
