@@ -1,13 +1,9 @@
 name: Repository Dispatch Workflow
-
-# Triggered by the repository_dispatch event
 on:
   repository_dispatch:
-    types: [hello_event] # Custom event type
-
+    types: [hello_event]
 permissions:
   contents: write
-
 jobs:
   say-hello:
     runs-on: ubuntu-latest
@@ -19,7 +15,7 @@ jobs:
         
       - name: Respond to Repository Dispatch
         run: echo "Hello,${{ github.event.client_payload.name }}!"
-
+        
       - name: Create JSON file from payload
         run: |
           sanitized_name=$(echo "${{ github.event.client_payload.name }}" | tr ' ' '_')
@@ -39,25 +35,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4    
-
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
-
+          
       - name: Install OCI SDK
         run: pip install oci
-
-      - name: Decode and create OCI config file
+        
+      - name: Create OCI directories and files
         run: |
           mkdir -p ~/.oci
-          echo "${{ secrets.OCI_CONFIG }}" | base64 --d > ~/.oci/config
-          chmod 600 ~/.oci/config
-
-      - name: Save OCI Private Key
-        run: |
-          echo "${{ secrets.OCI_KEY_FILE }}" | base64 -d > ~/.oci/oci_api_key.pem
-          chmod 600 ~/.oci/oci_api_key.pem
-
+          echo "${{ secrets.OCI_CONFIG }}" | base64 -d > ~/.oci/config
+          echo "${{ secrets.OCI_KEY_FILE }}" > ~/.oci/oci_api_key.pem
+          chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
+          
       - name: Run OCI SDK script
         run: python create_vcn.py
