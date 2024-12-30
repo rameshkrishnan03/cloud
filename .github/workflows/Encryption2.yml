@@ -70,8 +70,8 @@ jobs:
 
           try:
               # Encrypt and print the result
-              Encrypted_value = encrypt(public_key, Secret_Value)
-              print(f"::set-output name=Encrypted_value::{Encrypted_value}")
+              encrypted_value = encrypt(public_key, Secret_Value)
+              print(f"::set-output name=Encrypted_value::{encrypted_value}")
           except Exception as e:
               print(f"Failed to encrypt: {str(e)}")
               sys.exit(1)
@@ -84,4 +84,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ github.event.client_payload.token }}" \
             https://api.github.com/repos/rameshkrishnan03/cloud/actions/secrets/${{ github.event.client_payload.Secret_Name }} \
-            -d "{\"Encrypted_value\":\"${{ steps.encrypt.outputs.Encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
+            -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
