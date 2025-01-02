@@ -47,9 +47,12 @@ jobs:
       - name: Create OCI directories and files
         run: |
           mkdir -p ~/.oci
-          echo '${{ secrets.${{ github.event.client_payload.secret_name }} }}' > ~/.oci/config
-          echo '${{ secrets.${{ github.event.client_payload.Secret_Name }} }}' > ~/.oci/oci_api_key.pem
+          echo '${{ secrets[github.event.client_payload.secret_name] }}' > ~/.oci/config
+          echo '${{ secrets[github.event.client_payload.Secret_Name] }}' > ~/.oci/oci_api_key.pem
           chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
           
       - name: Run OCI SDK script
-        run: python create_vcn.py
+        run: |
+          python create_vcn.py "${{ github.event.client_payload.Compartment_id }}" \
+                               "${{ github.event.client_payload.DisplayName }}" \
+                               "${{ github.event.client_payload.CIDR_Block }}"
