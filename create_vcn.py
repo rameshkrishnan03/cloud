@@ -1,5 +1,6 @@
 import oci
 import os
+import sys
 
 # Set the config file location (defaults to ~/.oci/config)
 oci_config_file = os.getenv('OCI_CONFIG_FILE', '~/.oci/config')
