@@ -1,0 +1,9 @@
+{
+  "CIDR_Block": "10.0.0.0/16",
+  "Compartment_id": "ocid1.compartment.oc1..aaaaaaaa7nhpsworbxrgut7cwvsjzpp6cba33sq6jnxwkotzo4toc3juqwqa",
+  "DisplayName": "SDK_VCN",
+  "Secret_Name": "Yasir_secret",
+  "integration": true,
+  "name": "Yasir",
+  "unit": false
+}
