@@ -18,11 +18,15 @@ if len(sys.argv) != 4:
     print("Usage: python create_vcn.py <Compartment_id> <DisplayName> <CIDR_Block>")
     exit(1)
 
+compartment_id=sys.argv[1],
+display_name=sys.argv[2],
+cidr_block=sys.argv[3]
+
 # Create the VCN
 vcn_details = oci.core.models.CreateVcnDetails(
-    compartment_id=sys.argv[1],
-    display_name=sys.argv[2],
-    cidr_block=sys.argv[3]
+    compartment_id=compartment_id,
+    display_name=display_name,
+    cidr_block=cidr_block
 )
 
 try:
