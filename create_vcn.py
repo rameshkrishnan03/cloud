@@ -15,9 +15,9 @@ virtual_network_client = oci.core.VirtualNetworkClient(config)
 
 # Create the VCN
 vcn_details = oci.core.models.CreateVcnDetails(
-    compartment_id="ocid1.compartment.oc1..aaaaaaaa7nhpsworbxrgut7cwvsjzpp6cba33sq6jnxwkotzo4toc3juqwqa",
-    display_name="SDK_VCN",
-    cidr_block="10.0.0.0/16"
+    compartment_id="${{ github.event.client_payload.Compartment_id }}",
+    display_name="${{ github.event.client_payload.DisplayName }}",
+    cidr_block="${{ github.event.client_payload.CIDR_Block }}"
 )
 
 try:
