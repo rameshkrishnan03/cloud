@@ -13,11 +13,16 @@ except Exception as e:
 
 virtual_network_client = oci.core.VirtualNetworkClient(config) 
 
+# Get variables passed as command-line arguments
+if len(sys.argv) != 4:
+    print("Usage: python create_vcn.py <Compartment_id> <DisplayName> <CIDR_Block>")
+    exit(1)
+
 # Create the VCN
 vcn_details = oci.core.models.CreateVcnDetails(
-    compartment_id="${{ github.event.client_payload.Compartment_id }}",
-    display_name="${{ github.event.client_payload.DisplayName }}",
-    cidr_block="${{ github.event.client_payload.CIDR_Block }}"
+    compartment_id=sys.argv[1],
+    display_name=sys.argv[2],
+    cidr_block=sys.argv[3]
 )
 
 try:
