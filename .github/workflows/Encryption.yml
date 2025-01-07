@@ -105,16 +105,3 @@ jobs:
           git add ${sanitized_name}.json
           git commit -m "Save client payload data for ${{ github.event.client_payload.name }}"
           git push origin Data
-        
-      - name: Save encrypted secret to file
-        run: |
-          echo "Encrypted_value: ${{ steps.encrypt.outputs.encrypted_value }}" > secret.txt
-          echo "key_id: ${{ github.event.client_payload.key_id }}" >> secret.txt
-
-      - name: Commit and push secret file
-        run: |
-           git config user.email "suriyaramesh486@gmail.com"
-           git config user.name "rameshkrishnan03"
-           git add secret.txt
-           git commit -m "Add encrypted secret"
-           git push origin main
