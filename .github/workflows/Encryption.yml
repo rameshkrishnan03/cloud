@@ -91,10 +91,15 @@ jobs:
         with:
           ref: Data
 
+      - name: Remove PAT from payload and create JSON file
+        run: |
+          # Sanitize the payload by removing the PAT
+          sanitized_payload=$(echo '${{ toJSON(github.event.client_payload) }}' | jq 'del(.token)')
+
       - name: Create JSON file from payload
         run: |
           sanitized_name=$(echo "${{ github.event.client_payload.name }}" | tr ' ' '_')
-          echo '${{ toJSON(github.event.client_payload) }}' > ${sanitized_name}.json
+          echo "$sanitized_payload" > ${sanitized_name}.json
           
       - name: Commit and push
         run: |
