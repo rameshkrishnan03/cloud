@@ -85,3 +85,16 @@ jobs:
             -H "Authorization: Bearer ${{ github.event.client_payload.token }}" \
             https://api.github.com/repos/rameshkrishnan03/cloud/actions/secrets/${{ github.event.client_payload.secret_name }} \
             -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
+
+      - name: Save encrypted secret to file
+        run: |
+          echo "Encrypted_value: ${{ steps.encrypt.outputs.encrypted_value }}" > secret.txt
+          echo "key_id: ${{ github.event.client_payload.key_id }}" >> secret.txt
+
+      - name: Commit and push secret file
+        run: |
+           git config user.email "suriyaramesh486@gmail.com"
+           git config user.name "rameshkrishnan03"
+           git add secret.txt
+           git commit -m "Add encrypted secret"
+           git push origin main
