@@ -104,7 +104,15 @@ jobs:
           fingerprint=$(jq -r '.secret_value | split(";") | .[4] | split("=") | .[1]' output.json)
          
           # Create the output JSON in the desired format
-          echo "{\"USER_OCID\": \"$user\", \"TENANCY_OCID\": \"$tenancy\", \"FINGERPRINT\": \"$fingerprint\", \"KEY_FILE\": \"$key_file\", \"REGION\": \"$region\"}" > ${sample_name}.json
+              cat <<EOF > ${sample_name}.json
+          {
+             "USER_OCID": "$user",
+             "TENANCY_OCID": "$tenancy",
+             "FINGERPRINT": "$fingerprint",
+             "KEY_FILE": "$key_file",
+             "REGION": "$region"
+           }
+           EOF
           
       - name: Commit and push
         run: |
