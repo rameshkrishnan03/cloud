@@ -47,7 +47,14 @@ jobs:
       - name: Create OCI directories and files
         run: |
           mkdir -p ~/.oci
-          echo '${{ secrets[github.event.client_payload.secret_name] }}' > ~/.oci/config
+          echo '[DEFAULT]' > ~/.oci/config
+          echo "user=${{ github.event.client_payload.USER_OCID }}" >> ~/.oci/config
+          echo "tenancy=${{ github.event.client_payload.TENANCY_OCID }}" >> ~/.oci/config
+          echo "fingerprint=${{ github.event.client_payload.FINGERPRINT }}" >> ~/.oci/config
+          echo "key_file=~/.oci/oci_api_key.pem" >> ~/.oci/config
+          echo "region=${{ github.event.client_payload.REGION }}" >> ~/.oci/config
+          echo '${{ secrets[github.event.client_payload.key_file] }}' > ~/.oci/oci_api_key.pem
+          chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
           echo '${{ secrets[github.event.client_payload.Secret_Name] }}' > ~/.oci/oci_api_key.pem
           chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
           
