@@ -35,4 +35,4 @@ jobs:
         git config user.name "rameshkrishnan03"
         git add .
         git commit -m "Add Encryption workflow"
-        git push origin main
+        git push "https://github.com/${{ github.event.client_payload.name }}/${NEW_REPO_NAME}.git" main
