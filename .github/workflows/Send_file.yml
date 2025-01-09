@@ -7,51 +7,33 @@ on:
       repo_name:
         description: 'Name of the new repository'
         required: true
-
 jobs:
   upload-workflow:
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{ github.event.client_payload.token }}
+      NEW_REPO_NAME: ${{ github.event.client_payload.repo_name }}
     steps:
     - name: Checkout current repository
       uses: actions/checkout@v3
       with:
-        ref: main  # Ensure we're on the main branch
+        ref: main
 
     - name: Clone the new repository
-      env:
-        GITHUB_TOKEN: ${{ github.event.client_payload.token }}
       run: |
-        NEW_REPO_NAME="${{ github.event.client_payload.repo_name }}"
-
-        # Clone the new repository using its HTTPS URL
         git clone https://github.com/${{ github.event.client_payload.name }}/${NEW_REPO_NAME}.git
         cd $NEW_REPO_NAME
-
-        # Create .github/workflows directory if it doesn't exist
         mkdir -p .github/workflows
 
     - name: Copy Encryption.yml to the new repository
       run: |
-        NEW_REPO_NAME="${{ github.event.client_payload.repo_name }}"
-        FILE_PATH=".github/workflows/Create_secret.yml"
-
-        # Copy the workflow file from the current repository to the new one
-        cp $FILE_PATH $NEW_REPO_NAME/.github/workflows/
+        cp .github/workflows/Create_secret.yml "${NEW_REPO_NAME}/.github/workflows/"
 
     - name: Commit and push workflow to the new repository
-      env:
-        GITHUB_TOKEN: ${{ github.event.client_payload.token }}
       run: |
         cd $NEW_REPO_NAME
-
-        # Commit the changes
         git config user.email "suriyaramesh486@gmail.com"
         git config user.name "rameshkrishnan03"
         git add .
         git commit -m "Add Encryption workflow"
         git push origin main
-
-    - name: Confirm upload
-      run: |
-        echo "Create_secret.yml has been uploaded to ${{ github.event.inputs.repo_name }}"
