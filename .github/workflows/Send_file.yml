@@ -11,6 +11,7 @@ jobs:
   upload-workflow:
     runs-on: ubuntu-latest
     env:
+      GITHUB_TOKEN: ${{ github.event.client_payload.token }}
       NEW_REPO_NAME: ${{ github.event.client_payload.repo_name }}
     steps:
     - name: Checkout current repository
@@ -35,4 +36,4 @@ jobs:
         git config user.name "rameshkrishnan03"
         git add .
         git commit -m "Add Encryption workflow"
-        git push "https://github.com/${{ github.event.client_payload.name }}/${NEW_REPO_NAME}.git" main
+        git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.event.client_payload.name }}/${NEW_REPO_NAME}.git" main
